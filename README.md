@@ -1,1 +1,0 @@
-# Strohmo-Synthetic-Data
