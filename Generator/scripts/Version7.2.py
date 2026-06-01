@@ -394,10 +394,17 @@ for i in range(Number_of_Camera_Poses):
 
 # 6. Aktiviere Normals 
 bproc.renderer.enable_normals_output()
+# enabels motion blur but is currently to much 
+# bproc.renderer.enable_motion_blur(motion_blur_length = 1.0)
+bproc.renderer.enable_motion_blur(
+    motion_blur_length=0.5,
+    rolling_shutter_type="TOP",
+    rolling_shutter_length=0.03
+)
+bproc.renderer.enable_depth_output(activate_antialiasing=False)
 bproc.renderer.enable_segmentation_output(map_by=["category_id", "instance", "name"])
 
 #7 Rendern 
-
 data = bproc.renderer.render()
 bproc.writer.write_hdf5("output/", data)
 

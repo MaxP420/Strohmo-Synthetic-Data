@@ -2,6 +2,7 @@ import blenderproc as bproc
 import os
 import numpy as np
 
+
 bproc.init()
 
 # Path to the assets
