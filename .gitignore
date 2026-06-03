@@ -1,0 +1,14 @@
+#   *.log   takes all files with the .log ending out of the repository .
+.venv/
+#removes the venv folder out of the repository
+
+dataset/ 
+#removes the dataset folder out of the repository
+
+Generator/**/output/ 
+#removes the output folder out of the repository
+
+runs/
+
+YOLO Testing/
+#if you want to add an ignored file to your commit, use command: git add -f <file_name>
