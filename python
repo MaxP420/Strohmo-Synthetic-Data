@@ -1,2 +1,0 @@
-import os
-blender_path = os.environ["BLENDER_PATH"]
