@@ -104,11 +104,11 @@ appearance_percentage_orange_cone = 33.3333
 yellow_cone = True
 appearance_percentage_yellow_cone = 33.3333
 
-MinNumber_of_cones = 15
-MaxNumber_of_cones = 20
+MinNumber_of_cones = 10
+MaxNumber_of_cones = 15
 Include_Damaged_Cones = False
 appearance_percentage_of_damaged_cones = 10.0 #in percent
-Include_Knocked_Over_Cones = True 
+Include_Knocked_Over_Cones = False 
 appearance_percentage_of_knocked_over_cones = 10.0 #in percent 
 
 #Distractors
@@ -131,11 +131,11 @@ Distortion = False
 
 #Number of images to generate
 Number_of_scenes = 1
-Number_of_Camera_Poses = 1
+Number_of_Camera_Poses = 4
 YOLO_Annotation = True
 #Set Camera Resolution x,y 
 CameraResX = 640
-CameraResY = 480
+CameraResY = 640
 Output_path = "D:\\Strohmo\\Synthetic Data\\Strohmo-Synthetic-Data\\Generator\\output"
 
 
@@ -493,10 +493,11 @@ z_Knocked = 0.106
 placed_cones = []
 for cone in cones:
     cone_name = cone["name"]
-    # if cone_name == "blue_cone_knocked_over" or cone_name == "orange_cone_knocked_over" or cone_name == "yellow_cone_knocked_over" and not Include_Knocked_Over_Cones:
-    #     continue
-    # if cone_name == "blue_cone_damaged" or cone_name == "orange_cone_damaged" or cone_name == "yellow_cone_damaged" and not Include_Damaged_Cones:
-    #     continue
+
+    if cone_name == "blue_cone_knocked_over" or cone_name == "orange_cone_knocked_over" or cone_name == "yellow_cone_knocked_over" and not Include_Knocked_Over_Cones:
+        continue
+    if cone_name == "blue_cone_damaged" or cone_name == "orange_cone_damaged" or cone_name == "yellow_cone_damaged" and not Include_Damaged_Cones:
+        continue
     count = cone_count_map.get(cone_name, 0)
     
     for i in range(count):
@@ -566,10 +567,10 @@ for i in range(Number_of_Camera_Poses):
         # Kameramatrix (Brennweite + Hauptpunkt)
         orig_res_x, orig_res_y = CameraResX, CameraResY
         cam_K = np.array([[349.554, 0.0, 336.84], [0.0, 349.554, 189.185], [0.0, 0.0, 1.0]])
-        k1, k2, k3 = profile["k1"], profile["k2"], 0.0
         p1, p2 = 0.000311976, -9.62967e-5
         bproc.camera.set_intrinsics_from_K_matrix(cam_K, orig_res_x, orig_res_y, bpy.context.scene.camera.data.clip_start, bpy.context.scene.camera.data.clip_end)
-        mapping_coords = bproc.camera.set_lens_distortion(k1, k2, k3, p1, p2)
+        mapping_coords = bproc.camera.set_lens_distortion(profile["k1"], profile["k2"], 0.0, p1, p2)
+
     else:
         bproc.camera.set_resolution(CameraResX,CameraResY)
     
@@ -613,14 +614,14 @@ data = bproc.renderer.render()
 bproc.writer.write_hdf5("output/", data)
 
 
-
-#Post process the data and apply the lens distortion
-# post process the data and apply the lens distortion
-for key in ['colors', 'distance', 'normals']:
-    # use_interpolation should be false, for everything except colors
-    use_interpolation = key == "colors"
-    data[key] = bproc.postprocessing.apply_lens_distortion(data[key], mapping_coords, orig_res_x, orig_res_y,
-                                                           use_interpolation=use_interpolation)
+if Distortion:
+    #Post process the data and apply the lens distortion
+    # post process the data and apply the lens distortion
+    for key in ['colors', 'distance', 'normals']:
+        # use_interpolation should be false, for everything except colors
+        use_interpolation = key == "colors"
+        data[key] = bproc.postprocessing.apply_lens_distortion(data[key], mapping_coords, orig_res_x, orig_res_y,
+                                                            use_interpolation=use_interpolation)
 
 
 
