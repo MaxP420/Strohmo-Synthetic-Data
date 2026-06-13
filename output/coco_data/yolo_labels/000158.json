@@ -1,0 +1,23 @@
+{
+  "boxes": [
+    {
+      "label": "blue_cone",
+      "x": 397.0,
+      "y": 293.5,
+      "width": 12,
+      "height": 17,
+      "keypoints": null
+    },
+    {
+      "label": "orange_cone",
+      "x": 432.5,
+      "y": 341.5,
+      "width": 23,
+      "height": 27,
+      "keypoints": null
+    }
+  ],
+  "height": 640,
+  "key": "images/000158.jpg",
+  "width": 640
+}

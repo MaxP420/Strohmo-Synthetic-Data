@@ -1,0 +1,31 @@
+{
+  "boxes": [
+    {
+      "label": "blue_cone",
+      "x": 153.0,
+      "y": 319.0,
+      "width": 12,
+      "height": 18,
+      "keypoints": null
+    },
+    {
+      "label": "blue_cone",
+      "x": 278.5,
+      "y": 313.5,
+      "width": 11,
+      "height": 15,
+      "keypoints": null
+    },
+    {
+      "label": "yellow_cone_knocked_over",
+      "x": 129.0,
+      "y": 359.5,
+      "width": 32,
+      "height": 21,
+      "keypoints": null
+    }
+  ],
+  "height": 640,
+  "key": "images/001087.jpg",
+  "width": 640
+}

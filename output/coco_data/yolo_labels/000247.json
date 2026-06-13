@@ -1,0 +1,55 @@
+{
+  "boxes": [
+    {
+      "label": "blue_cone",
+      "x": 600.5,
+      "y": 319.0,
+      "width": 11,
+      "height": 14,
+      "keypoints": null
+    },
+    {
+      "label": "blue_cone",
+      "x": 77.5,
+      "y": 453.0,
+      "width": 45,
+      "height": 52,
+      "keypoints": null
+    },
+    {
+      "label": "blue_cone",
+      "x": 440.5,
+      "y": 310.5,
+      "width": 9,
+      "height": 11,
+      "keypoints": null
+    },
+    {
+      "label": "yellow_cone",
+      "x": 544.5,
+      "y": 325.5,
+      "width": 11,
+      "height": 15,
+      "keypoints": null
+    },
+    {
+      "label": "yellow_cone",
+      "x": 315.5,
+      "y": 312.0,
+      "width": 7,
+      "height": 12,
+      "keypoints": null
+    },
+    {
+      "label": "yellow_cone_damaged",
+      "x": 342.0,
+      "y": 337.0,
+      "width": 16,
+      "height": 18,
+      "keypoints": null
+    }
+  ],
+  "height": 640,
+  "key": "images/000247.jpg",
+  "width": 640
+}

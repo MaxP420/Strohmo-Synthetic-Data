@@ -1,0 +1,23 @@
+{
+  "boxes": [
+    {
+      "label": "yellow_cone_damaged",
+      "x": 590.0,
+      "y": 317.0,
+      "width": 12,
+      "height": 16,
+      "keypoints": null
+    },
+    {
+      "label": "yellow_cone_damaged",
+      "x": 144.5,
+      "y": 375.5,
+      "width": 23,
+      "height": 27,
+      "keypoints": null
+    }
+  ],
+  "height": 640,
+  "key": "images/001071.jpg",
+  "width": 640
+}

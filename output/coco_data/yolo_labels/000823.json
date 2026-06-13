@@ -1,0 +1,79 @@
+{
+  "boxes": [
+    {
+      "label": "blue_cone",
+      "x": 475.5,
+      "y": 348.5,
+      "width": 15,
+      "height": 17,
+      "keypoints": null
+    },
+    {
+      "label": "orange_cone",
+      "x": 462.0,
+      "y": 364.0,
+      "width": 16,
+      "height": 20,
+      "keypoints": null
+    },
+    {
+      "label": "orange_cone",
+      "x": 43.0,
+      "y": 313.0,
+      "width": 6,
+      "height": 10,
+      "keypoints": null
+    },
+    {
+      "label": "orange_cone",
+      "x": 255.5,
+      "y": 325.0,
+      "width": 11,
+      "height": 12,
+      "keypoints": null
+    },
+    {
+      "label": "yellow_cone",
+      "x": 47.5,
+      "y": 316.0,
+      "width": 9,
+      "height": 10,
+      "keypoints": null
+    },
+    {
+      "label": "yellow_cone",
+      "x": 3.0,
+      "y": 320.0,
+      "width": 6,
+      "height": 12,
+      "keypoints": null
+    },
+    {
+      "label": "yellow_cone",
+      "x": 257.0,
+      "y": 329.5,
+      "width": 12,
+      "height": 13,
+      "keypoints": null
+    },
+    {
+      "label": "yellow_cone",
+      "x": 231.0,
+      "y": 311.0,
+      "width": 8,
+      "height": 10,
+      "keypoints": null
+    },
+    {
+      "label": "yellow_cone_damaged",
+      "x": 181.0,
+      "y": 480.0,
+      "width": 28,
+      "height": 44,
+      "keypoints": null
+    }
+  ],
+  "height": 640,
+  "key": "images/000823.jpg",
+  "width": 640
+}

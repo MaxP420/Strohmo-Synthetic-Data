@@ -7,8 +7,12 @@ dataset/
 
 Generator/**/output/ 
 #removes the output folder out of the repository
+Generator/**/assets/ 
 
-runs/
+YOLO Testing/**/images/
+YOLO Testing/**/Bilder/
+YOLO Testing/**/bild/
+YOLO Testing/**/labels
 
-YOLO Testing/
+
 #if you want to add an ignored file to your commit, use command: git add -f <file_name>

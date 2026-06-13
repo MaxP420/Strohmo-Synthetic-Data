@@ -1,0 +1,39 @@
+{
+  "boxes": [
+    {
+      "label": "blue_cone",
+      "x": 459.5,
+      "y": 234.0,
+      "width": 19,
+      "height": 24,
+      "keypoints": null
+    },
+    {
+      "label": "blue_cone",
+      "x": 563.0,
+      "y": 220.5,
+      "width": 16,
+      "height": 21,
+      "keypoints": null
+    },
+    {
+      "label": "orange_cone",
+      "x": 104.0,
+      "y": 262.5,
+      "width": 24,
+      "height": 31,
+      "keypoints": null
+    },
+    {
+      "label": "yellow_cone_damaged",
+      "x": 182.0,
+      "y": 262.0,
+      "width": 28,
+      "height": 32,
+      "keypoints": null
+    }
+  ],
+  "height": 640,
+  "key": "images/000360.jpg",
+  "width": 640
+}

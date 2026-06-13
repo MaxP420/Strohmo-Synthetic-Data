@@ -1,0 +1,55 @@
+{
+  "boxes": [
+    {
+      "label": "blue_cone",
+      "x": 601.0,
+      "y": 410.5,
+      "width": 30,
+      "height": 41,
+      "keypoints": null
+    },
+    {
+      "label": "blue_cone",
+      "x": 592.5,
+      "y": 312.5,
+      "width": 11,
+      "height": 15,
+      "keypoints": null
+    },
+    {
+      "label": "orange_cone",
+      "x": 209.5,
+      "y": 309.0,
+      "width": 11,
+      "height": 14,
+      "keypoints": null
+    },
+    {
+      "label": "orange_cone",
+      "x": 316.0,
+      "y": 302.5,
+      "width": 10,
+      "height": 13,
+      "keypoints": null
+    },
+    {
+      "label": "yellow_cone",
+      "x": 594.5,
+      "y": 302.5,
+      "width": 9,
+      "height": 13,
+      "keypoints": null
+    },
+    {
+      "label": "yellow_cone",
+      "x": 84.5,
+      "y": 308.5,
+      "width": 9,
+      "height": 15,
+      "keypoints": null
+    }
+  ],
+  "height": 640,
+  "key": "images/000915.jpg",
+  "width": 640
+}
