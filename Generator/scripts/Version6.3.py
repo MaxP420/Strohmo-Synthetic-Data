@@ -96,20 +96,20 @@ BigOrange_cone = True
 appearance_percentage_BigOrange_cone = 0.0
 
 blue_cone = True
-appearance_percentage_blue_cone = 33.333333
+appearance_percentage_blue_cone = 33.33
 
 orange_cone = True
-appearance_percentage_orange_cone = 33.3333
+appearance_percentage_orange_cone = 33.33
 
 yellow_cone = True
-appearance_percentage_yellow_cone = 33.3333
+appearance_percentage_yellow_cone = 33.33
 
-MinNumber_of_cones = 10
-MaxNumber_of_cones = 15
-Include_Damaged_Cones = False
+MinNumber_of_cones = 15
+MaxNumber_of_cones = 20
+Include_Damaged_Cones = True
 appearance_percentage_of_damaged_cones = 10.0 #in percent
-Include_Knocked_Over_Cones = False 
-appearance_percentage_of_knocked_over_cones = 10.0 #in percent 
+Include_Knocked_Over_Cones = True
+appearance_percentage_of_knocked_over_cones = 50.0 #in percent 
 
 #Distractors
 MinNumber_of_distractor_Types = 2
@@ -118,9 +118,9 @@ MinNumber_of_distractors_of_Type = 2
 MaxNumber_of_distractors_of_Type = 3
 
 #Lighting 
-All_lightings = False
+All_lightings = True
 BadWeather = False
-Daylight = True
+Daylight = False
 Sunset = False
 Sunrise = False
 Nighttime = False
@@ -137,6 +137,7 @@ YOLO_Annotation = True
 CameraResX = 640
 CameraResY = 640
 Output_path = "D:\\Strohmo\\Synthetic Data\\Strohmo-Synthetic-Data\\Generator\\output"
+#Output_path = "D:\\Strohmo\\Synthetic Data\\Strohmo-Synthetic-Data\\YOLO Testing\\PrecisionCheck\\images\\val"
 
 
 
@@ -150,24 +151,95 @@ Output_path = "D:\\Strohmo\\Synthetic Data\\Strohmo-Synthetic-Data\\Generator\\o
 bproc.utility.reset_keyframes()
 #Funktion Body of Loop
 
-#Calculate Number of each Cone and Distractors based on the configuration
-#All Cones
+"""Calculate cone counts so the total number of cones never exceeds total_cones.
+Damaged and knocked-over cones are treated as subtypes of each color group.
+"""
+
 total_cones = random.randint(MinNumber_of_cones, MaxNumber_of_cones)
-#Number of normal Cones
-number_of_orange_cones = int((appearance_percentage_orange_cone / 100) * total_cones)
-number_of_blue_cones = int((appearance_percentage_blue_cone / 100) * total_cones)
-number_of_yellow_cones = int((appearance_percentage_yellow_cone / 100) * total_cones)
-number_of_BigOrange_cones = int((appearance_percentage_BigOrange_cone / 100) * total_cones)
-#Number of Damaged Cones 
-number_of_damaged_orange_cones = int((appearance_percentage_of_damaged_cones / 100) * number_of_orange_cones)
-number_of_damaged_blue_cones = int((appearance_percentage_of_damaged_cones / 100) * number_of_blue_cones)
-number_of_damaged_yellow_cones = int((appearance_percentage_of_damaged_cones / 100) * number_of_yellow_cones)
-number_of_damaged_BigOrange_cones = int((appearance_percentage_of_damaged_cones / 100) * number_of_BigOrange_cones)
-#Number of Knocked Over Cones 
-number_of_KnockedOver_orange_cones = 5 #int(round((appearance_percentage_of_knocked_over_cones/100)*total_cones * (appearance_percentage_orange_cone/100)))
-number_of_KnockedOver_blue_cones = 5 #int(round((appearance_percentage_of_knocked_over_cones/100)*total_cones * (appearance_percentage_blue_cone/100)))
-number_of_KnockedOver_yellow_cones = 5 #int(round((appearance_percentage_of_knocked_over_cones/100)*total_cones * (appearance_percentage_yellow_cone/100)))
-number_of_KnockedOver_BigOrange_cones = 0 #int(round((appearance_percentage_of_knocked_over_cones/100)*total_cones * (appearance_percentage_BigOrange_cone/100)))
+
+base_color_percentages = {
+    "big_orange_cone": appearance_percentage_BigOrange_cone,
+    "blue_cone": appearance_percentage_blue_cone,
+    "orange_cone": appearance_percentage_orange_cone,
+    "yellow_cone": appearance_percentage_yellow_cone,
+}
+
+base_color_counts = {}
+fractional_parts = {}
+for name, pct in base_color_percentages.items():
+    exact_count = (pct / 100) * total_cones
+    base_color_counts[name] = int(np.floor(exact_count))
+    fractional_parts[name] = exact_count - base_color_counts[name]
+
+remaining = total_cones - sum(base_color_counts.values())
+for name in sorted(fractional_parts, key=lambda k: fractional_parts[k], reverse=True)[:remaining]:
+    base_color_counts[name] += 1
+
+def _split_subtypes(base_count):
+    damaged = int(round((appearance_percentage_of_damaged_cones / 100) * base_count)) if Include_Damaged_Cones else 0
+    knocked = int(round((appearance_percentage_of_knocked_over_cones / 100) * base_count)) if Include_Knocked_Over_Cones else 0
+    normal = base_count - damaged - knocked
+    if normal < 0:
+        overflow = -normal
+        if damaged >= overflow:
+            damaged -= overflow
+        else:
+            overflow -= damaged
+            damaged = 0
+            knocked = max(0, knocked - overflow)
+        normal = 0
+    return normal, damaged, knocked
+
+number_of_BigOrange_cones = base_color_counts["big_orange_cone"]
+number_of_blue_cones, number_of_damaged_blue_cones, number_of_KnockedOver_blue_cones = _split_subtypes(base_color_counts["blue_cone"])
+number_of_orange_cones, number_of_damaged_orange_cones, number_of_KnockedOver_orange_cones = _split_subtypes(base_color_counts["orange_cone"])
+number_of_yellow_cones, number_of_damaged_yellow_cones, number_of_KnockedOver_yellow_cones = _split_subtypes(base_color_counts["yellow_cone"])
+
+number_of_damaged_BigOrange_cones = 0
+number_of_KnockedOver_BigOrange_cones = 0
+
+total_assigned_cones = (
+    number_of_BigOrange_cones
+    + number_of_blue_cones
+    + number_of_orange_cones
+    + number_of_yellow_cones
+    + number_of_damaged_blue_cones
+    + number_of_damaged_orange_cones
+    + number_of_damaged_yellow_cones
+    + number_of_KnockedOver_blue_cones
+    + number_of_KnockedOver_orange_cones
+    + number_of_KnockedOver_yellow_cones
+)
+
+if total_assigned_cones > total_cones:
+    extra = total_assigned_cones - total_cones
+    reductions = {
+        "number_of_KnockedOver_yellow_cones": number_of_KnockedOver_yellow_cones,
+        "number_of_KnockedOver_orange_cones": number_of_KnockedOver_orange_cones,
+        "number_of_KnockedOver_blue_cones": number_of_KnockedOver_blue_cones,
+        "number_of_damaged_yellow_cones": number_of_damaged_yellow_cones,
+        "number_of_damaged_orange_cones": number_of_damaged_orange_cones,
+        "number_of_damaged_blue_cones": number_of_damaged_blue_cones,
+        "number_of_yellow_cones": number_of_yellow_cones,
+        "number_of_orange_cones": number_of_orange_cones,
+        "number_of_blue_cones": number_of_blue_cones,
+    }
+    for attr in reductions:
+        if extra <= 0:
+            break
+        while reductions[attr] > 0 and extra > 0:
+            reductions[attr] -= 1
+            extra -= 1
+    number_of_KnockedOver_yellow_cones = reductions["number_of_KnockedOver_yellow_cones"]
+    number_of_KnockedOver_orange_cones = reductions["number_of_KnockedOver_orange_cones"]
+    number_of_KnockedOver_blue_cones = reductions["number_of_KnockedOver_blue_cones"]
+    number_of_damaged_yellow_cones = reductions["number_of_damaged_yellow_cones"]
+    number_of_damaged_orange_cones = reductions["number_of_damaged_orange_cones"]
+    number_of_damaged_blue_cones = reductions["number_of_damaged_blue_cones"]
+    number_of_yellow_cones = reductions["number_of_yellow_cones"]
+    number_of_orange_cones = reductions["number_of_orange_cones"]
+    number_of_blue_cones = reductions["number_of_blue_cones"]
+
 #Distractors Total and per Type. Select Distractors and palce in new list
 total_distractor_types = random.randint(MinNumber_of_distractor_Types, MaxNumber_of_distractor_Types)
 total_distractors_per_type = random.randint(MinNumber_of_distractors_of_Type, MaxNumber_of_distractors_of_Type)
@@ -194,18 +266,26 @@ Baeume = bproc.loader.load_blend(Baeume_path)
 # Randomisierungsparameter für Straße, HDRI, Licht (2 Parameter)
 #Street
 #randomize HDRI and set world background + Street 
-if All_lightings:
-    random_lighing_condition = random.choice(["Daylight_HDRIs", "Sunset_HDRIs", "Sunrise_HDRIs", "Nighttime_HDRIs", "Cloudy_HDRIs"])
-    if random_lighing_condition == "Daylight_HDRIs":
-        Daylight = True 
-    elif random_lighing_condition == "Sunset_HDRIs":
-        Sunset = True 
-    elif random_lighing_condition == "Sunrise_HDRIs":
-        Sunrise = True 
-    elif random_lighing_condition == "Nighttime_HDRIs":
-        Nighttime = True 
-    elif random_lighing_condition == "Cloudy_HDRIs":
-        BadWeather = True
+while(1):
+    if All_lightings:
+        random_lighing_condition = random.choice(["Daylight_HDRIs", "Sunset_HDRIs", "Sunrise_HDRIs", "Nighttime_HDRIs", "Cloudy_HDRIs"])
+        if random_lighing_condition == "Daylight_HDRIs":
+            Daylight = True 
+            break
+        elif random_lighing_condition == "Sunset_HDRIs":
+            Sunset = True 
+            break
+        elif random_lighing_condition == "Sunrise_HDRIs":
+            Sunrise = True 
+            break
+        elif random_lighing_condition == "Nighttime_HDRIs":
+            if Nighttime == False: 
+                continue
+            else:
+                Nighttime = True 
+        elif random_lighing_condition == "Cloudy_HDRIs":
+            BadWeather = True
+            break
 
 if Daylight:
     hdri = random.choice(Daylight_HDRIs)
@@ -600,9 +680,9 @@ bproc.renderer.enable_distance_output(activate_antialiasing=True)
 
 if MotionBlur:
     bproc.renderer.enable_motion_blur(
-    motion_blur_length=0.3,
+    motion_blur_length=0.04,
     rolling_shutter_type="TOP",
-    rolling_shutter_length=0.03
+    rolling_shutter_length=0.07
     )
     bproc.renderer.enable_depth_output(activate_antialiasing=False)
 

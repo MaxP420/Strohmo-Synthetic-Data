@@ -1,0 +1,11 @@
+path: D:\Strohmo\Synthetic Data\Strohmo-Synthetic-Data\YOLO Testing\PrecisionCheck
+
+train: D:\Strohmo\Synthetic Data\Strohmo-Synthetic-Data\YOLO Testing\PrecisionCheck\images\train
+val: D:\Strohmo\Synthetic Data\Strohmo-Synthetic-Data\YOLO Testing\PrecisionCheck\images\val
+
+names:
+  0: blue_cone
+  1: yellow_cone
+  2: orange_cone
+  3: knocked_over
+  

@@ -6,10 +6,10 @@ import threading
 # ============================================================
 #  KONFIGURATION – hier anpassen
 # ============================================================
-ANZAHL_DURCHLAEUFE       = 1           # Wie viele Durchläufe insgesamt
-BLENDER_SKRIPT           =  "D:\\Strohmo\\Synthetic Data\\Strohmo-Synthetic-Data\\Generator\\scripts\\Version6.py"
-CONVERTER_SKRIPT         =  "D:\\Strohmo\\Synthetic Data\\Strohmo-Synthetic-Data\\Generator\\scripts\\coco_to_yolo_per_image.py"
-WARTE_SEKUNDEN_CONVERTER = 3          # Sekunden nach "Blender quit" bis Converter startet
+ANZAHL_DURCHLAEUFE       = 100           # Wie viele Durchläufe insgesamt
+BLENDER_SKRIPT           =  "D:\\Strohmo\\Synthetic Data\\Strohmo-Synthetic-Data\\Generator\\scripts\\Version6.3.py"
+CONVERTER_SKRIPT         =  "D:\\Strohmo\\Synthetic Data\\Strohmo-Synthetic-Data\\Generator\\scripts\\Automation\\coco_to_yolo_per_image.py"
+WARTE_SEKUNDEN_CONVERTER = 5          # Sekunden nach "Blender quit" bis Converter startet
 STOP_SIGNAL              = "Cleaning temporary directory"  # Erkennungsstring im Terminal
 # ============================================================
 
